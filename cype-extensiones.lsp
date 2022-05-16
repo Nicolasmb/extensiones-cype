@@ -298,14 +298,18 @@
           )
         )
         ; Si existe en la cadena el patron " "
-        ((vl-string-search "" (strcase sub-string t))
+        ((vl-string-search " " (strcase sub-string t))
           (progn
-            (setq i (+ 1 (vl-string-search "" (strcase sub-string t))))
+            (setq i (+ 1 (vl-string-search " " (strcase sub-string t))))
             ; Se extrae la parte de la cadena de texto a la izquierda del caracter divisorio.
             (setq sub-string (substr sub-string 1 (1- i)))
           )
         )
-        ; Sino se encontró un simbolo de diametro en la cadena se va a retornar nil.
+        ; Si la sub-string se puede convertir a un numero real
+        ((numberp (atof (strcase sub-string t)))
+	        sub-string
+        ) 
+        ; Sino se encontró cumple ninguno de las verificaciones de cadena se va a retornar nil.
         (t (setq sub-string nil))
       )
     )
